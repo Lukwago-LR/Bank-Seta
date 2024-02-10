@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width initial-scale=1.0" name="viewport">
+    <title>Bank Seta</title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" rel="stylesheet">
+    <link href=".././static/style.css" rel="stylesheet">
+</head>
+<body>
+
+<!--title-->
+<section id="title">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <p class="title-bankseta">BANK SETA</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--navigation bar-->
+<section id="navigation">
+    <nav class="navbar navbar-expand-lg navbar-light">
+
+        <button aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation"
+                class="navbar-toggler"
+                data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+            <span><img src="../static/images/navbar-icon.jpg" width="30px"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('administrator')}}">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+
+                    <span aria-expanded="false" class="nav-link dropdown-toggle"
+                          data-toggle="dropdown"
+                          href="#" id="navbarDropdown" role="button">
+                    Profile</span>
+                    <div class="dropdown-content">
+                        <a class="text-light" href="#">Account Details</a>
+                        <a class="text-light" href="#">Notifications</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-danger" href="#">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</section>
+<br><br><br>
+<div class="row">
+    <div class="col-12 head">
+        <h2>Upload Content</h2>
+    </div>
+</div>
+
+<!--login-->
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-12 card-upload">
+                <!-- File upload form HTML -->
+                <form action="/upload" method="post">
+                    <!-- Video file input -->
+                    <div class="upload">
+                        <label for="videoInput">Input video URL</label><br>
+                        <input id="videoInput" name="videoInput" type="text" required>
+                        <button class="btn-upload" type="submit">Upload</button>
+                    </div>
+                </form>
+
+                <form action="/upload" enctype="multipart/form-data" method="post">
+                    <!-- PDF file input -->
+                    <div class="upload">
+                        <label for="pdfInput">Select a PDF file</label><br>
+                        <input accept=".pdf" id="pdfInput" name="pdfInput" type="file" required>
+                        <button class="btn-upload" type="submit">Upload</button>
+                    </div>
+                </form>
+
+                <form action="/upload" enctype="multipart/form-data" method="post">
+                    <!-- DOCX file input -->
+                    <div class="upload">
+                        <label for="docxInput">Select a DOCX file</label><br>
+                        <input accept=".docx" id="docxInput" name="docxInput" type="file" required>
+                        <button class="btn-upload" type="submit">Upload</button>
+                    </div>
+                </form>
+
+                <form action="/upload" enctype="multipart/form-data" method="post">
+                    <!-- Excel file input -->
+                    <div class="upload">
+                        <label for="excelInput">Select an Excel file</label><br>
+                        <input accept=".xls, .xlsx" id="excelInput" name="excelInput" type="file" required>
+                        <button class="btn-upload" type="submit">Upload</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-lg-6 col-12 card-upload">
+                <h2 class="instruction">Instructions</h2>
+                <ul>
+                    <li>File must be assigned a name</li>
+                    <li>After the name, insert a dash (**)  <span>eg: https://video.com**Number patterns</span></li>
+                    <li>Insert one of the search strings below</li>
+                    <li>Upload</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <span class="search text-light">Number patterns</span>
+                <span class="search text-light">Sequences</span>
+                <span class="search text-light">Series</span>
+                <span class="search text-light">Formal definition</span>
+                <span class="search text-light">Inverses</span>
+                <span class="search text-light">Exponential</span>
+                <span class="search text-light">Logarithmic</span>
+                <span class="search text-light">Euclidean Geometry</span>
+                <span class="search text-light">Analytical Geometry</span>
+                <span class="search text-light">Differential Calculus</span>
+                <span class="search text-light">Polynomials</span>
+                <span class="search text-light">Finance growth and decay (continuation)</span>
+                <span class="search text-light">Statistics</span>
+                <span class="search text-light">Counting and probability</span>
+                <span class="search text-light">Momentum & Impulse</span>
+                <span class="search text-light">Vertical projectile motion</span>
+                <span class="search text-light">Work, energy and power</span>
+                <span class="search text-light">Rate and extent of reaction</span>
+                <span class="search text-light">Chemical equilibrium</span>
+                <span class="search text-light">Acids and bases</span>
+                <span class="search text-light">Electrochemical reactions</span>
+                <span class="search text-light">Electric circuits</span>
+                <span class="search text-light">Electrodynamics</span>
+                <span class="search text-light">Optical phenomena and properties of materials</span>
+                <span class="search text-light">Organic molecules</span>
+                <span class="search text-light">Doppler Effect</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--footer-->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="footer-text">
+                    <h5>Contact Us</h5>
+                    <span>Email: info@schoolwebsite.com</span> &nbsp; &nbsp; &nbsp; <span>Phone: (+27) 456-7890</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

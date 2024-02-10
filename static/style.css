@@ -1,0 +1,321 @@
+/*body*/
+body{
+ background-image: url('./images/background.jpg');
+}
+
+a {
+        text-decoration: none; /* Remove underlining */
+}
+
+/*title section*/
+.title-bankseta{
+text-align:center;
+font-size:3em;
+font:Calibri;
+color:white;
+font-weight: bold;
+}
+
+
+.navbar-toggler{![](../../../../../AppData/Local/Temp/navbar-icon.jpg)
+background-color:black;
+margin:10px;
+margin-right:10px;
+}
+
+/*login section*/
+#login{
+width:40%;
+margin-left:auto;
+margin-right:auto;
+padding:0.5rem;
+margin-top:3em;
+}
+
+#login .card-body .login-btn{
+text-align:center;
+padding:0.5em;
+}
+
+#login .card-body .sign-up-btn{
+float:left;
+}
+
+#login .card-body form{
+padding:10px;
+}
+
+#login .card-body .forgot-pass-btn{
+float:right;
+}
+
+/*footer*/
+#footer{
+text-align:center;
+font:Calibri;
+color:white;
+margin-top:2.5em;
+}
+
+.footer-text{
+padding:2px;
+font-size:15px;
+}
+
+/*register*/
+#register{
+width:40%;
+margin-left:auto;
+margin-right:auto;
+padding:0.5rem;
+margin-top:3em;
+}
+
+#register .card-body .register-btn{
+text-align:center;
+padding:0.8em;
+}
+
+#register .card-body form{
+padding:10px;
+}
+
+.form-check{
+padding:10px;
+}
+
+/*Student*/
+#navigation{
+margin:4px;
+float:right;
+background-color:white;
+}
+
+.nav-link{
+color:black;
+}
+
+.navbar{
+  list-style-type: none;
+  margin: 2px;
+  padding: 0;
+  max-width:220px;
+}
+
+ul li .nav-button {
+  border: none;
+  color:white;
+  background-color: black;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+}
+
+ul li .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+ul li .dropdown-content {
+  display: none;
+  background-color: black;
+  padding:2px;
+  color:white;
+  font-weight: bold;
+  position: absolute;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+ul li .dropdown:hover .dropdown-content {
+  display: block;
+}
+
+ul li .dropdown-content a{
+ margin:1px;
+}
+
+ul nav img{
+color:white;
+}
+
+ul nav .navbar-toggler{
+background-color:black;
+}
+/*Welcome*/
+#welcome{
+width:55%;
+
+float:left;
+}
+
+.wel{
+font-weight:bold;
+font-size:40px;
+color:white;
+}
+
+/*Heading*/
+#heading{
+width:100%;
+}
+
+.head{
+text-align:center;
+font-weight:bold;
+font-size:30px;
+color:white;
+}
+
+/*Subjects*/
+.subj-content{
+margin:5px;
+text-align:center;
+}
+
+.subj{
+color:white;
+text-align:center;
+font-weight:bold;
+font-size:20px;
+padding:2px;
+Border:black solid 2px;
+}
+
+.topic{
+color:white;
+text-align:center;
+font-weight:bold;
+font-size:1.5rem;
+}
+
+.search{
+background-color:black;
+margin:2px;
+}
+
+.subj-button{
+margin:5px;
+background-color:black;
+color:white;
+}
+
+/*download*/
+.download{
+text-align:center;
+}
+
+.download-rows{
+background-color:black;
+padding-top:12px;
+margin:5px;
+}
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: black;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  margin:2px;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  max-width: 1800px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+
+/* Links inside the dropdown */
+.dropdown-content button {
+  background-color: black;
+  padding: 1px;
+  text-decoration: none;
+}
+
+
+/* Change color of dropdown links on hover */
+.dropdown-content button:hover {background-color: grey;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: gray;}
+
+.s-button{
+color: white;
+}
+
+/*Scheduling*/
+.card{
+text-align:center;
+margin:2.5px;
+}
+
+.card-title{
+font-weight:bold;
+}
+
+.rank{
+border:solid 1px red;
+font-size: 20px;
+font-weight: bold;
+border-radius: 100%;
+background-color:red;
+}
+
+/*Uploading*/
+.upload{
+border: solid black 2px;
+font-weight:bold;
+margin:5px;
+}
+.card-upload{
+order:solid 1px red;
+color:white;
+font-weight:bold;
+}
+
+.instruction{
+text-align:center;
+}
+
+.btn-upload{
+float:right;
+}
+
+/*ranking*/
+.submit{
+background-color:white;
+color:black;
+margin:5px;
+font-weight:bold;
+}
+
+/*Scheduling*/
+.schedule{
+text-align:center;
+border: solid black 2px;
+color:white;
+}
+
+.sched{
+margin:5px;
+}
+
+
