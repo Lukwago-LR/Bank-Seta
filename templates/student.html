@@ -93,9 +93,13 @@
                     <div class="dropdown">
                         <button class="dropbtn">Sequences and Series</button>
                         <div class="dropdown-content">
-                            <button class="search text-light" type="button">Number patterns</button>
-                            <button class="search  text-light" type="button">Sequences</button>
-                            <button class="search  text-light" type="button">Series</button>
+                            <button class="search text-light"><a
+                                    href="{{url_for('surf', topic='Number patterns(Maths)')}}">Number patterns</a>
+                            </button>
+                            <button class="search  text-light"><a href="{{url_for('surf', topic='Sequences(Maths)')}}">Sequences</a>
+                            </button>
+                            <button class="search  text-light"><a href="{{url_for('surf', topic='Series(Maths)')}}">Series</a>
+                            </button>
                             </button>
                         </div>
                     </div>
@@ -103,43 +107,59 @@
                     <div class="dropdown">
                         <button class="dropbtn">Functions</button>
                         <div class="dropdown-content">
-                            <button class="search text-light" type="button">Formal definition</button>
-                            <button class="search  text-light" type="button">Inverses</button>
-                            <button class="search  text-light" type="button">Exponential</button>
-                            <button class="search  text-light" type="button">Logarithmic</button>
+                            <button class="search text-light"><a
+                                    href="{{url_for('surf', topic='Formal definition(Maths)')}}">Formal definition</a>
+                            </button>
+                            <button class="search  text-light"><a href="{{url_for('surf', topic='Inverses(Maths)')}}">Inverses</a>
+                            </button>
+                            <button class="search  text-light"><a
+                                    href="{{url_for('surf', topic='Exponential(Maths)')}}">Exponential</a></button>
+                            <button class="search  text-light"><a
+                                    href="{{url_for('surf', topic='Logarithmic(Maths)')}}">Logarithmic</a></button>
                         </div>
                     </div>
 
                     <div class="dropdown">
                         <button class="dropbtn">Geometry</button>
                         <div class="dropdown-content">
-                            <button class="search text-light" type="button">Euclidean Geometry</button>
-                            <button class="search  text-light" type="button">Analytical Geometry</button>
+                            <button class="search text-light"><a
+                                    href="{{url_for('surf', topic='Euclidean Geometry(Maths)')}}">Euclidean Geometry</a>
+                            </button>
+                            <button class="search  text-light"><a
+                                    href="{{url_for('surf', topic='Analytical Geometry(Maths)')}}">Analytical
+                                Geometry</a></button>
                         </div>
                     </div>
 
                     <div class="dropdown">
                         <button class="dropbtn">Calculus</button>
                         <div class="dropdown-content">
-                            <button class="search text-light" type="button">Differential Calculus</button>
-                            <button class="search  text-light" type="button">Polynomials</button>
+                            <button class="search text-light"><a
+                                    href="{{url_for('surf', topic='Differential Calculus<(Maths)')}}">Differential
+                                Calculus</a></button>
+                            <button class="search  text-light"><a
+                                    href="{{url_for('surf', topic='Polynomials(Maths)')}}">Polynomials</a></button>
                         </div>
                     </div>
 
                     <div class="dropdown">
                         <button class="dropbtn">Finance</button>
                         <div class="dropdown-content">
-                            <button class="search text-light" type="button">Finance growth and decay (continuation)
-                            </button>
+                            <button class="search text-light"><a
+                                    href="{{url_for('surf', topic='Finance growth and decay-continuation(Maths)')}}">Finance
+                                growth and decay (continuation)</a></button>
                         </div>
                     </div>
 
                     <div class="dropdown">
                         <button class="dropbtn">Statistics and Probability</button>
                         <div class="dropdown-content">
-                            <button class="search text-light" type="button">Statistics</button>
+                            <button class="search text-light"><a href="{{url_for('surf', topic='Statistics(Maths)')}}">Statistics</a>
                             </button>
-                            <button class="search text-light" type="button">Counting and probability</button>
+                            </button>
+                            <button class="search text-light"><a
+                                    href="{{url_for('surf', topic='Counting and probability(Maths)')}}">Counting and
+                                probability</a></button>
                             </button>
                         </div>
                     </div>
@@ -155,19 +175,33 @@
                     <div class="dropdown">
                         <button class="dropbtn">MECHANICS</button>
                         <div class="dropdown-content">
-                            <button class="search  text-light" type="button">Momentum & Impulse</button>
-                            <button class="search  text-light" type="button">Vertical projectile motion</button>
-                            <button class="search  text-light" type="button">Work, energy and power</button>
+                            <button class="search  text-light"><a
+                                    href="{{url_for('surf', topic='Momentum & Impulse(Science)')}}">Momentum &
+                                Impulse</a></button>
+                            <button class="search  text-light"><a
+                                    href="{{url_for('surf', topic='Vertical projectile motion(Science)')}}">Vertical
+                                projectile motion</a></button>
+                            <button class="search  text-light"><a
+                                    href="{{url_for('surf', topic='Work, energy and power(Science)')}}">Work, energy and
+                                power</a></button>
                         </div>
                     </div>
 
                     <div class="dropdown">
                         <button class="dropbtn">CHEMICAL CHANGE</button>
                         <div class="dropdown-content">
-                            <button class="search  text-light" type="button">Rate and extent of reaction</button>
-                            <button class="search  text-light" type="button">Chemical equilibrium</button>
-                            <button class="search  text-light" type="button">Acids and bases</button>
-                            <button class="search  text-light" type="button">Electrochemical reactions</button>
+                            <button class="search  text-light"><a
+                                    href="{{url_for('surf', topic='Rate and extent of reaction(Science)')}}">Rate and
+                                extent of reaction</a></button>
+                            <button class="search  text-light"><a
+                                    href="{{url_for('surf', topic='Chemical equilibrium(Science)')}}">Chemical
+                                equilibrium</a></button>
+                            <button class="search  text-light"><a
+                                    href="{{url_for('surf', topic='Acids and bases(Science)')}}">Acids and bases</a>
+                            </button>
+                            <button class="search  text-light"><a
+                                    href="{{url_for('surf', topic='Electrochemical reactions(Science)')}}">Electrochemical
+                                reactions</a></button>
                         </div>
                     </div>
                 </div>
@@ -176,8 +210,12 @@
                     <div class="dropdown">
                         <button class="dropbtn">ELECTRICITY & MAGNETISM</button>
                         <div class="dropdown-content">
-                            <button class="search  text-light" type="button">Electric circuits</button>
-                            <button class="search  text-light" type="button">Electrodynamics</button>
+                            <button class="search  text-light"><a
+                                    href="{{url_for('surf', topic='Electric circuits(Science)')}}">Electric circuits</a>
+                            </button>
+                            <button class="search  text-light"><a
+                                    href="{{url_for('surf', topic='Electrodynamics(Science)')}}">Electrodynamics</a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -186,15 +224,21 @@
                     <div class="dropdown">
                         <button class="dropbtn">MATTER & MATERIALS</button>
                         <div class="dropdown-content">
-                            <button class="search  text-light" type="button">Optical phenomena and properties of materials</button>
-                            <button class="search  text-light" type="button">Organic molecules</button>
+                            <button class="search  text-light"><a
+                                    href="{{url_for('surf', topic='Optical phenomena and properties of materials(Science)')}}">Optical
+                                phenomena and properties of materials</a></button>
+                            <button class="search  text-light"><a
+                                    href="{{url_for('surf', topic='Organic molecules(Science)')}}">Organic molecules</a>
+                            </button>
                         </div>
                     </div>
 
                     <div class="dropdown">
                         <button class="dropbtn">WAVES, SOUND & LIGHT</button>
                         <div class="dropdown-content">
-                            <button class="search text-light" type="button">Doppler Effect</button>
+                            <button class="search text-light"><a
+                                    href="{{url_for('surf', topic='Doppler Effect(Science)')}}">Doppler Effect</a>
+                            </button>
                         </div>
                     </div>
                 </div>

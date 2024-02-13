@@ -54,39 +54,36 @@
         </div>
     </nav>
 </section>
-<br>
-
-<!--welcome-->
-<section id="welcome">
-    <div class="container">
-        <div class="row">
-            <h1 class="wel">Welcome {{name}}</h1>
-        </div>
-    </div>
-</section>
-<br><br><br><br><br>
+<br><br>
 
 <section id="heading">
     <div class="container">
         <div class="row">
             <div class="col-12 head">
-                <h2>Volunteer Details</h2>
+                <h3>Volunteer Details</h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-4 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title"><span>Name : </span>John</h3>
-                        <h5 class="text-topic"><span>Subject : </span>Maths</h5>
-                        <h5 class="card-text"><span>Topic : </span>Series</h5>
-                        <h5 class="card-text"><span>Email : </span><b class="text-danger">lukwagorsaved@gmail.com</b>
-                        </h5>
-                        <p class="card-text"><span>Time : </span>15/02/2024 (0800hrs - 1000hrs)</p>
-                        <a class="btn btn-dark stretched-link" href="#">Recruit Volunteer</a>
+            {%if users %}
+                {%for person in users%}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title"><span>Name : </span>{{person[0]}}</h3>
+                                <h3 class="card-text"><span>Email : </span><b class="text-danger">{{person[1]}}</b></h3>
+                                <h5 class="card-title"><span>Status : </span>{{person[2]}}</h5>
+                                <a class="btn btn-dark stretched-link" href="{{url_for('verify', volunteer_id=person[3])}}">Recruit Volunteer</a>
+                            </div>
+                        </div>
+                    </div>
+                {%endfor%}
+            {%else%}
+                <div class="col-12">
+                    <div class="card">
+                         <h3 class="card-title text-danger">All volunteers are already verified</h3>
                     </div>
                 </div>
-            </div>
+            {%endif%}}
         </div>
     </div>
 </section>
