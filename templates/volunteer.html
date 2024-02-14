@@ -40,11 +40,12 @@
 
                     <span aria-expanded="false" class="nav-link dropdown-toggle"
                                   data-toggle="dropdown"
-                              href="#" id="navbarDropdown" role="button">
+                              id="navbarDropdown" role="button">
                     Profile</span>
                     <div class="dropdown-content">
                         <a class="text-light" href="#">Account Details</a>
                         <a class="text-light" href="#">Notifications</a>
+                        <a class="text-light" href="{{ url_for('my_schedules', user_id=user_id) }}">My Schedules</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -63,7 +64,6 @@
             <h1 class="wel">Welcome {{name}}</h1>
         </div>
     </div>
-    </div>
 </section>
 <br><br><br><br><br>
 
@@ -72,78 +72,29 @@
     <div class="container">
         <div class="row">
             <div class="col-12 head">
-                <h2>Available Sessions for Volunteering</h2>
+                <h2 class="text-decoration-underline">Available Sessions for Volunteering</h2>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title">MATHS</h3>
-                        <h5 class="text-topic"><span>Topic : </span>Series</h5>
-                        <p class="card-text">15/02/2024 (0800hrs - 1000hrs)</p>
-                        <a class="btn btn-dark stretched-link" href="#">Take Slot</a>
+            {%if schedules%}
+                {%for sched in schedules%}
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-title">{{sched[2]}}</p>
+                                <p class="text-topic"><span><b>Topic</b> : </span>{{sched[3]}}</p>
+                                <p class="card-text"><span><b>Time</b> : </span>{{sched[4]}} {{sched[5]}}</p>
+                                <p class="card-text"><span><b>Status</b> : </span><b class="text-danger">{{sched[1]}}</b></p>
+                                <a class="btn btn-dark stretched-link" href="{{url_for('slots', slot_id=sched[0])}}"><b>Take Slot</b></a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title">PHYSICS</h3>
-                        <h5 class="text-topic"><span>Topic : </span>Mechanics</h5>
-                        <p class="card-text">15/02/2024 (0800hrs - 1000hrs)</p>
-                        <a class="btn btn-dark stretched-link" href="#">Take Slot</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title">CHEMISTRY</h3>
-                        <h5 class="text-topic"><span>Topic : </span>Bonds</h5>
-                        <p class="card-text">15/02/2024 (0800hrs - 1000hrs)</p>
-                        <a class="btn btn-dark stretched-link" href="#">Take Slot</a>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title">CHEMISTRY</h3>
-                        <h5 class="text-topic"><span>Topic : </span>Bonds</h5>
-                        <p class="card-text">15/02/2024 (0800hrs - 1000hrs)</p>
-                        <a class="btn btn-dark stretched-link" href="#">Take Slot</a>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title">CHEMISTRY</h3>
-                        <h5 class="text-topic"><span>Topic : </span>Chemical Reactions</h5>
-                        <p class="card-text">15/02/2024 (0800hrs - 1000hrs)</p>
-                        <a class="btn btn-dark stretched-link" href="#">Take Slot</a>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title">MATHS</h3>
-                        <h5 class="text-topic"><span>Topic : </span>Functions</h5>
-                        <p class="card-text">15/02/2024 (0800hrs - 1000hrs)</p>
-                        <a class="btn btn-dark stretched-link" href="#">Take Slot</a>
-                    </div>
-                </div>
-
-            </div>
+                {%endfor%}
+            {%else%}
+                 <div class="col-12">
+                      <h3 class="card-title text-danger text-center">There are no available slots for volunteering</h3>
+                 </div>
+            {%endif%}
         </div>
     </div>
 </section>

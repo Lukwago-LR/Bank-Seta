@@ -62,25 +62,29 @@
     <div class="container">
         <div class="row">
             <div class="col-12 download">
-
-                {%for material in content%}
-                <div class="row download-rows">
-                    <div class="col-md-4 col-12">
-                        <p class="text-light">{{material[3]}}</p>
-                    </div>
-                    <div class="col-md-4 col-12">
-                         {% if "pdf" in material[3] %}
-                            <button class="button"><a href="{{url_for('download', topic=topic)}}">Download</a></button>
-                         {% else %}
-                            <button class="button"><a href="{{material[4]}}">Watch</a></button>
-                          {% endif %}
-                    </div>
-                    <div class="col-md-4 col-12">
-                        <p class="text-light">Rank <span class="rank text-light">4</span></p>
-                    </div>
-                </div>
-                {%endfor%}
-
+                 {%if content%}
+                    {%for material in content%}
+                        <div class="row download-rows">
+                            <div class="col-md-4 col-12">
+                                <p class="text-light">{{material[3]}}</p>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                 {% if "pdf" in material[3] %}
+                                    <button class="button"><a href="{{url_for('download', topic=topic)}}">Download</a></button>
+                                 {% else %}
+                                    <button class="button"><a target="_blank" href="{{material[4]}}">Watch</a></button>
+                                  {% endif %}
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <p class="text-light">Rank <span class="rank text-light">4</span></p>
+                            </div>
+                        </div>
+                    {%endfor%}
+                 {%else%}
+                     <div class="col-12 download">
+                         <h3 class="card-title text-danger text-center">Content not yet available </h3>
+                     </div>
+                 {%endif%}
             </div>
         </div>
     </div>

@@ -4,10 +4,15 @@ from io import BytesIO
 from flask import Flask, render_template, request, session, redirect, url_for, send_file
 
 from database import get_user_credentials, get_user_from_type, insert_new_schedule, insert_new_Maths, \
-    insert_new_Science, get_volunteer_status, get_content, get_all_unverified_volunteer, verify_volunteer
+    insert_new_Science, get_volunteer_status, get_content, get_all_unverified_volunteer, verify_volunteer, \
+    get_all_new_schedules, register_user, update_slot_status, insert_schedule_volunteer, all_schedules, \
+    delete_single_schedule, get_my_schedules, All_Table, insert_into_subjects
 
 app = Flask(__name__)
 app.secret_key = "any"
+
+# db = sqlite3.connect("bank_seta.db")
+# All_Table(db)
 
 
 @app.route("/", methods=['POST', 'GET'])
@@ -29,7 +34,9 @@ def login():
                     if "Unverified" in status:
                         return render_template("verification.html", name=data["name"], msg_sent=True)
                     else:
-                        return render_template("volunteer.html", name=data["name"], msg_sent=True)
+                        schedules = get_all_new_schedules(db, "New")
+                        return render_template("volunteer.html", name=data["name"], schedules=schedules,
+                                               user_id=user[0])
             else:
                 return render_template("login.html", login_message="Invalid credentials")
 
@@ -47,8 +54,9 @@ def register():
     if request.method == "POST":
         data = request.form
         if data['pass'] == data['password_confirm']:
+            db = sqlite3.connect("bank_seta.db")
+            register_user(db, data['name'], data['email'], data['usertype'], data['pass'])
             return render_template("logout.html")
-
     return render_template("register.html")
 
 
@@ -72,6 +80,8 @@ def upload():
                 subject = topic_subject[1].split(")")[0]
 
                 db = sqlite3.connect("bank_seta.db")
+                insert_into_subjects(db)
+
                 if subject == "Maths":
                     insert_new_Maths(db, topic, sub_topic, content_name, video_url)
                     return render_template("upload.html", upload_status="file uploaded successfully")
@@ -96,14 +106,15 @@ def file_upload():
             subject = topic_subject[1].split(")")[0]
 
             db = sqlite3.connect("bank_seta.db")
+            insert_into_subjects(db)
+
             if subject == "Maths":
                 insert_new_Maths(db, topic, sub_topic, file.filename, file.read())
                 return render_template("upload.html", upload_status="file uploaded successfully")
             elif subject == "Science":
                 insert_new_Science(db, topic, sub_topic, file.filename, file.read())
                 redirect(url_for('upload', upload_status="file uploaded successfully"))
-
-        return render_template("upload.html")
+        return render_template("upload.html", upload_status="file uploaded successfully")
     except Exception:
         redirect(url_for('upload', upload_status="Error"))
 
@@ -144,7 +155,10 @@ def administrator():
 
 @app.route("/volunteer", methods=['GET', 'POST'])
 def volunteer():
-    return render_template("volunteer.html", name=session.get('user_name'))
+    db = sqlite3.connect("bank_seta.db")
+    schedules = get_all_new_schedules(db, "New")
+    return render_template("volunteer.html", name=session.get('user_name'), schedules=schedules,
+                           user_id=session.get('user_id'))
 
 
 @app.route("/screen", methods=['GET', 'POST'])
@@ -166,6 +180,36 @@ def verify(volunteer_id):
     db = sqlite3.connect("bank_seta.db")
     verify_volunteer(db, volunteer_id)
     return render_template("screen.html")
+
+
+@app.route('/slots/<slot_id>')
+def slots(slot_id):
+    db = sqlite3.connect("bank_seta.db")
+    update_slot_status(db, slot_id)
+    insert_schedule_volunteer(db, slot_id, session.get('user_id'))
+    return redirect(url_for('volunteer', name=session.get('user_name')))
+
+
+@app.route('/periods')
+def periods():
+    db = sqlite3.connect("bank_seta.db")
+    schedules = all_schedules(db)
+    p = get_all_new_schedules(db, "New")
+    return render_template('slots.html', schedules=schedules, periods=p)
+
+
+@app.route('/delete_schedules/<schedule_id>')
+def delete_schedule(schedule_id):
+    db = sqlite3.connect("bank_seta.db")
+    delete_single_schedule(db, schedule_id)
+    return redirect(url_for('periods'))
+
+
+@app.route('/my_schedules/<user_id>')
+def my_schedules(user_id):
+    db = sqlite3.connect("bank_seta.db")
+    schedules = get_my_schedules(db, user_id)
+    return render_template('myschedules.html', schedules=schedules)
 
 
 if __name__ == '__main__':

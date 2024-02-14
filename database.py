@@ -50,14 +50,18 @@ def get_all_unverified_volunteer(db):
     return users
 
 
-def register(db, username, email, usertype, password):
+def register_user(db, username, email, usertype, password):
     cursor = db.cursor()
     if usertype == "Volunteer":
         cursor.execute("INSERT INTO Users (name, email, password, type) VALUES(?,?,?,?)",
                        (username, email, password, usertype))
         db.commit()
-        user_id = cursor.execute("SELECT MAX(id) FROM Users WHERE type='Volunteer'")
-        cursor.execute("INSERT INTO Volunteers (id, status) VALUES(?,?)", (user_id, "Unverified"))
+        user_ID = cursor.execute("SELECT MAX(id) FROM Users WHERE type='Volunteer'")
+        s_id = user_ID.fetchone()
+
+        print(s_id)
+        cursor.execute("INSERT INTO Volunteers (id, status) VALUES(?,?)", (s_id[0], "Unverified"))
+        db.commit()
     else:
         cursor.execute("INSERT INTO Users (name, email, password, type) VALUES(?,?,?,?)",
                        (username, email, password, usertype))
@@ -74,18 +78,38 @@ def insert_new_schedule(db, status, subject, topic, fro, to, d):
     cursor.close()
 
 
+def insert_into_subjects(db):
+    cursor = db.cursor()
+    sql = "INSERT INTO Subjects (rank) VALUES (0)"
+    cursor.execute(sql)
+    db.commit()
+    cursor.close()
+
+
+def get_subjects_id(db):
+    cursor = db.cursor()
+    sql = "SELECT MAX(id) FROM Subjects"
+    cursor.execute(sql)
+    subj_id = cursor.fetchone()
+    cursor.close()
+    return subj_id
+
+
 def insert_new_Maths(db, topic, sub_topic, content_name, source):
     cursor = db.cursor()
-    cursor.execute("INSERT INTO Maths (Topic, Sub_Topic, Content_Name, Source) VALUES (?, "
-                   "?, ?, ?)", (topic, sub_topic, content_name, source))
+    subj_id = get_subjects_id(db)
+    print(subj_id[0])
+    cursor.execute("INSERT INTO Maths (id, Topic, Sub_Topic, Content_Name, Source) VALUES (?, ?, "
+                   "?, ?, ?)", (subj_id[0], topic, sub_topic, content_name, source))
     db.commit()
     cursor.close()
 
 
 def insert_new_Science(db, topic, sub_topic, content_name, source):
     cursor = db.cursor()
-    cursor.execute("INSERT INTO Science (Topic, Sub_Topic, Content_Name, Source) VALUES (?, "
-                   "?, ?, ?)", (topic, sub_topic, content_name, source))
+    subj_id = get_subjects_id(db)
+    cursor.execute("INSERT INTO Science (id, Topic, Sub_Topic, Content_Name, Source) VALUES (?, ?, "
+                   "?, ?, ?)", (subj_id[0], topic, sub_topic, content_name, source))
     db.commit()
     cursor.close()
 
@@ -94,34 +118,34 @@ def All_Table(db):
     cursor = db.cursor()
 
     # layer one tables
-    cursor.execute(
-        "CREATE TABLE Users (id INTEGER PRIMARY KEY AUTOINCREMENT ,name VARCHAR(255) NOT NULL,email VARCHAR(255) NOT "
-        "NULL,password VARCHAR(255) NOT NULL,type VARCHAR(255) NOT NULL)")
+    # cursor.execute(
+    #     "CREATE TABLE Users (id INTEGER PRIMARY KEY AUTOINCREMENT ,name VARCHAR(255) NOT NULL,email VARCHAR(255) NOT "
+    #     "NULL,password VARCHAR(255) NOT NULL,type VARCHAR(255) NOT NULL)")
 
-    cursor.execute("CREATE TABLE Science(Id INTEGER PRIMARY KEY AUTOINCREMENT, Topic VARCHAR(255) NOT NULL, Sub_Topic "
-                   "VARCHAR(255) NOT NULL, Content_Name VARCHAR(255) NOT NULL, Source VARCHAR(255) NOT NULL)")
+    # cursor.execute("CREATE TABLE Subjects(id INTEGER PRIMARY KEY AUTOINCREMENT, rank INTEGER "
+    #                "NOT NULL)")
+    #
+    # cursor.execute(
+    #     "CREATE TABLE Science(id INTEGER PRIMARY KEY AUTOINCREMENT, Topic VARCHAR(255) NOT NULL, Sub_Topic VARCHAR("
+    #     "255) NOT NULL, Content_Name VARCHAR(255) NOT NULL, Source VARCHAR(255) NOT NULL,FOREIGN KEY (id) REFERENCES "
+    #     "Subjects(id))")
 
-    cursor.execute("CREATE TABLE Maths(Id INTEGER PRIMARY KEY AUTOINCREMENT, Topic VARCHAR(255) NOT NULL, Sub_Topic "
-                   "VARCHAR(255) NOT NULL, Content_Name VARCHAR(255) NOT NULL, Source VARCHAR(255) NOT NULL)")
+    # cursor.execute("CREATE TABLE Maths(id INTEGER PRIMARY KEY AUTOINCREMENT, Topic VARCHAR(255) NOT NULL, Sub_Topic "
+    #                "VARCHAR(255) NOT NULL, Content_Name VARCHAR(255) NOT NULL, Source VARCHAR(255) NOT NULL, "
+    #                "FOREIGN KEY (id) REFERENCES Subjects(id))")
 
-    cursor.execute("CREATE TABLE Notifications(id INTEGER PRIMARY KEY AUTOINCREMENT,status VARCHAR(255) NOT NULL,"
-                   "Recipient VARCHAR(255) NOT NULL)")
+    # cursor.execute("CREATE TABLE Notifications(id INTEGER PRIMARY KEY AUTOINCREMENT,status VARCHAR(255) NOT NULL,"
+    #                "Recipient VARCHAR(255) NOT NULL)")
 
-    cursor.execute("CREATE TABLE Schedules(id INTEGER PRIMARY KEY AUTOINCREMENT,status VARCHAR(255) NOT NULL,"
-                   "subject VARCHAR(255) NOT NULL,topic VARCHAR(255) NOT NULL,slot_time VARCHAR(255) NOT NULL,"
-                   "slot_date DATE NOT NULL)")
+    # cursor.execute("CREATE TABLE Schedules(id INTEGER PRIMARY KEY AUTOINCREMENT,status VARCHAR(255) NOT NULL,"
+    #                "subject VARCHAR(255) NOT NULL,topic VARCHAR(255) NOT NULL,slot_time VARCHAR(255) NOT NULL,"
+    #                "slot_date DATE NOT NULL)")
 
-    cursor.execute("CREATE TABLE Downloads(id INTEGER NOT NULL PRIMARY KEY,name VARCHAR(255) NOT NULL,rank INTEGER "
-                   "NOT NULL,FOREIGN KEY (id) REFERENCES Students(id))")
+    # cursor.execute("CREATE TABLE Volunteers(id INTEGER PRIMARY KEY, status VARCHAR(255) NOT NULL,FOREIGN KEY (id) "
+    #                "REFERENCES Users(id))")
 
-    cursor.execute("CREATE TABLE Volunteers(id INTEGER PRIMARY KEY, status VARCHAR(255) NOT NULL,FOREIGN KEY (id) "
-                   "REFERENCES Users(id))")
-
-    cursor.execute("CREATE TABLE Student_Download(s_id INTEGER NOT NULL, d_id INTEGER NOT NULL, PRIMARY KEY(s_id, "
-                   "d_id), FOREIGN KEY (s_id) REFERENCES Users(id), FOREIGN KEY (d_id) REFERENCES Downloads(id))")
-
-    cursor.execute("CREATE TABLE Volunteer_Schedule(s_id INTEGER NOT NULL, v_id INTEGER NOT NULL, PRIMARY KEY(s_id, "
-                   "v_id),FOREIGN KEY (s_id) REFERENCES Schedules(id), FOREIGN KEY (v_id) REFERENCES Volunteers(id))")
+    # cursor.execute("CREATE TABLE Volunteer_Schedule(s_id INTEGER NOT NULL, v_id INTEGER NOT NULL, PRIMARY KEY(s_id, "
+    #                "v_id),FOREIGN KEY (s_id) REFERENCES Schedules(id), FOREIGN KEY (v_id) REFERENCES Volunteers(id))")
 
     db.commit()
     cursor.close()
@@ -142,6 +166,17 @@ def get_content(db, search_string):
     return download_file
 
 
+def all_schedules(db):
+    cursor = db.cursor()
+    s = "SELECT Users.name, Users.email, Schedules.subject, Schedules.topic, Schedules.slot_time, " \
+        "Schedules.slot_date, Schedules.status, Schedules.id FROM Users INNER JOIN Volunteer_Schedule ON Users.id = " \
+        "Volunteer_Schedule.v_id INNER JOIN Schedules ON Schedules.id = Volunteer_Schedule.s_id "
+    cursor.execute(s)
+    download_file = cursor.fetchall()
+    cursor.close()
+    return download_file
+
+
 def verify_volunteer(db, volunteer_id):
     try:
         cursor = db.cursor()
@@ -155,3 +190,60 @@ def verify_volunteer(db, volunteer_id):
         print(f"Error verifying volunteer: {e}")
         return False  # Indicates failure
 
+
+def get_all_new_schedules(db, schedule_status):
+    try:
+        cursor = db.cursor()
+        # Using parameterized query to prevent SQL injection
+        s = f"SELECT * FROM Schedules WHERE status='{schedule_status}'"
+        cursor.execute(s)
+        schedules = cursor.fetchall()
+        cursor.close()
+        return schedules
+    except Exception as e:
+        # Handle exceptions (e.g., database errors)
+        print(f"Error fetching schedules: {e}")
+        return None
+
+
+def update_slot_status(db, slot_id):
+    try:
+        cursor = db.cursor()
+        # Using parameterized query to prevent SQL injection
+        cursor.execute("UPDATE Schedules SET status=? WHERE id=?", ('Scheduled', slot_id))
+        db.commit()  # Commit changes to the database
+        cursor.close()
+        return True  # Indicates successful update
+    except Exception as e:
+        # Handle exceptions (e.g., database errors)
+        print(f"Error verifying volunteer: {e}")
+        return False  # Indicates failure
+
+
+def insert_schedule_volunteer(db, slot_id, volunteer_id):
+    cursor = db.cursor()
+    cursor.execute("INSERT INTO Volunteer_Schedule (s_id, v_id) VALUES (?, ?)", (slot_id, volunteer_id))
+    db.commit()
+    cursor.close()
+
+
+def delete_single_schedule(db, schedule_id):
+    cursor = db.cursor()
+    cursor.execute("DELETE FROM Volunteer_Schedule WHERE s_id = ?", schedule_id)
+    cursor.execute("DELETE FROM Schedules WHERE id = ?", schedule_id)
+    db.commit()
+    cursor.close()
+
+
+def get_my_schedules(db, user_id):
+    cursor = db.cursor()
+    sql = """
+        SELECT Schedules.subject, Schedules.topic, Schedules.slot_time, Schedules.slot_date, Schedules.status, Schedules.id 
+        FROM Schedules 
+        INNER JOIN Volunteer_Schedule ON Schedules.id = Volunteer_Schedule.s_id 
+        WHERE Volunteer_Schedule.v_id = ?
+    """
+    cursor.execute(sql, (user_id,))
+    download_file = cursor.fetchall()
+    cursor.close()
+    return download_file

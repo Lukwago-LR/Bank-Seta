@@ -72,7 +72,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 head">
-                <h2>Grade 12 Revision Platform</h2>
+                <h2 class="text-decoration-underline">Grade 12 Revision Platform</h2>
             </div>
         </div>
     </div>
@@ -86,11 +86,13 @@
                 <div class="subj-content">
                    <a class="subj-button" href="{{url_for('upload')}}">Upload Content</a>
                     <br>
-                    <a class="subj-button" href="{{url_for('content')}}">Content Rankings</a>
+                    <a class="subj-button" href="{{url_for('content')}}">View Content Rankings</a>
                      <br>
-                    <a class="subj-button" href="{{url_for('schedule')}}">Volunteer Scheduling</a>
+                    <a class="subj-button" href="{{url_for('schedule')}}">Create new Schedules</a>
                      <br>
                     <a class="subj-button" href="{{url_for('screen')}}">Screen Volunteers</a>
+                     <br>
+                    <a class="subj-button" href="{{url_for('periods')}}">Manage Schedules</a>
                 </div>
             </div>
         </div>
