@@ -44,7 +44,6 @@
                     Profile</span>
                     <div class="dropdown-content">
                         <a class="text-light" href="#">Account Details</a>
-                        <a class="text-light" href="{{ url_for('rank') }}">Rankings</a>
                         <a class="text-light" href="#">Notifications</a>
                     </div>
                 </li>
@@ -70,13 +69,16 @@
                             </div>
                             <div class="col-md-4 col-12">
                                  {% if "pdf" in material[3] %}
-                                    <button class="button"><a href="{{url_for('download', topic=topic)}}">Download</a></button>
+                                    <button class="button"><a href="{{url_for('download', content_id=material[0], topic=topic)}}">Download</a></button>
                                  {% else %}
                                     <button class="button"><a target="_blank" href="{{material[4]}}">Watch</a></button>
                                   {% endif %}
                             </div>
                             <div class="col-md-4 col-12">
-                                <p class="text-light">Rank <span class="rank text-light">4</span></p>
+                                {%if not return_f%}
+                                     <a class="text-light" href="{{ url_for('rank', cont_id=material[0], cont_name=material[3]) }}">Rank</a>
+                                {%endif%}
+                                 <span class="rank text-light">{{rank}}</span>
                             </div>
                         </div>
                     {%endfor%}

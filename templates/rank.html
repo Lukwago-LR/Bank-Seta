@@ -39,12 +39,11 @@
                 <li class="nav-item dropdown">
 
                     <span aria-expanded="false" class="nav-link dropdown-toggle"
-                                  data-toggle="dropdown"
-                              id="navbarDropdown" role="button">
+                          data-toggle="dropdown"
+                          id="navbarDropdown" role="button">
                     Profile</span>
                     <div class="dropdown-content">
                         <a class="text-light" href="">Account Details</a>
-                         <a class="text-light" href="{{ url_for('rank') }}">Rankings</a>
                         <a class="text-light" href="">Notifications</a>
                     </div>
                 </li>
@@ -61,7 +60,7 @@
 
 <div class="row">
     <div class="col-12 head">
-        <h2>Rank accessed content</h2>
+        <h3 class="text-decoration-underline">Rank content</h3>
     </div>
 </div>
 
@@ -72,44 +71,25 @@
             <div class="col-12 download">
                 <div class="row download-rows">
                     <div class="col-md-6 col-12">
-                        <p class="text-light">Sum of the first n terms in geometric series</p>
+                        <p class="text-light">{{content_name}}</p>
                     </div>
                     <div class="col-md-6 col-12">
-                        <select aria-label="Default select example" class="form-select">
-                            <option selected value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
-                         <button class="submit">Submit</button>
-                    </div>
-                </div>
-                <div class="row download-rows">
-                    <div class="col-md-6 col-12">
-                        <p class="text-light">Calculating the average of a geometric series</p>
-                    </div>
-                    <div class="col-md-6 col-12">
-                        <select aria-label="Default select example" class="form-select">
-                            <option selected value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
-                         <button class="submit">Submit</button>
+                        <form id="rank_form" name="rank_name" method="POST">
+                            <select aria-label="Default select example" class="form-select" name="rank_name">
+                                <option selected value=0>0</option>
+                                <option value=1>1</option>
+                                <option value=2>2</option>
+                                <option value=3>3</option>
+                                <option value=4>4</option>
+                                <option value=5>5</option>
+                                <option value=6>6</option>
+                                <option value=7>7</option>
+                                <option value=8>8</option>
+                                <option value=9>9</option>
+                                <option value=10>10</option>
+                            </select>
+                            <button type="submit" name="ranked">Submit</button>
+                        </form>
                     </div>
                 </div>
             </div>

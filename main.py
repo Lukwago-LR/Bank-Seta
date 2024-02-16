@@ -6,10 +6,12 @@ from flask import Flask, render_template, request, session, redirect, url_for, s
 from database import get_user_credentials, get_user_from_type, insert_new_schedule, insert_new_Maths, \
     insert_new_Science, get_volunteer_status, get_content, get_all_unverified_volunteer, verify_volunteer, \
     get_all_new_schedules, register_user, update_slot_status, insert_schedule_volunteer, all_schedules, \
-    delete_single_schedule, get_my_schedules, All_Table, insert_into_subjects
+    delete_single_schedule, get_my_schedules, All_Table, insert_into_subjects, insert_into_history, check_history, \
+    get_current_rank, ranking, delete_new_schedule, get_single_file
 
 app = Flask(__name__)
 app.secret_key = "any"
+
 
 # db = sqlite3.connect("bank_seta.db")
 # All_Table(db)
@@ -60,9 +62,16 @@ def register():
     return render_template("register.html")
 
 
-@app.route("/rank", methods=['GET'])
-def rank():
-    return render_template("rank.html", name=session.get('user_name'))
+@app.route("/rank<cont_id>/<cont_name>", methods=['GET', 'POST'])
+def rank(cont_id, cont_name):
+    if request.method == "POST":
+        data = request.form
+        db = sqlite3.connect("bank_seta.db")
+        insert_into_history(db, session.get('user_id'), cont_id)
+        ranking(db, cont_id, data['rank_name'])
+        return render_template("student.html", name=session.get('user_name'))
+    else:
+        return render_template("rank.html", student_id=session.get('user_id'), content_name=cont_name)
 
 
 @app.route("/upload", methods=['GET', 'POST'])
@@ -104,6 +113,7 @@ def file_upload():
             topic_subject = sub_topic_topic_subject[1].split("-")
             topic = topic_subject[0]
             subject = topic_subject[1].split(")")[0]
+            print(subject)
 
             db = sqlite3.connect("bank_seta.db")
             insert_into_subjects(db)
@@ -127,8 +137,9 @@ def schedule():
         get_user_from_type(db, "Administrator", session.get('user_name'))
         insert_new_schedule(db, "New", data["scheduled_subject"], data["topic"], data["from"], data["to"],
                             data["datepicker"])
-        return render_template("administrator.html", name=session.get('user_name'))
-    return render_template("schedule.html", name=session.get('user_name'))
+        return render_template("schedule.html", upload_status='Schedule created successfully',
+                               name=session.get('user_name'))
+    return render_template("schedule.html", upload_status='', name=session.get('user_name'))
 
 
 @app.route("/content", methods=['GET', 'POST'])
@@ -140,7 +151,13 @@ def content():
 def surf(topic):
     db = sqlite3.connect("bank_seta.db")
     cont = get_content(db, topic)
-    return render_template("download.html", name=session.get('user_name'), content=cont, topic=topic)
+    if cont:
+        return_file = check_history(db, session.get('user_id'), cont[0][0])
+        grade = get_current_rank(db, cont[0][0])
+        return render_template("download.html", name=session.get('user_name'), content=cont, topic=topic,
+                               return_f=return_file, rank=grade[0])
+    return render_template("download.html", name=session.get('user_name'), content=cont, topic=topic, return_f=[],
+                           rank=0)
 
 
 @app.route("/student", methods=['GET', 'POST'])
@@ -168,21 +185,21 @@ def screen():
     return render_template("screen.html", users=volunteers)
 
 
-@app.route('/download/<topic>')
-def download(topic):
+@app.route('/download<content_id>/<topic>')
+def download(content_id, topic):
     db = sqlite3.connect("bank_seta.db")
-    download_f = get_content(db, topic)
-    return send_file(BytesIO(download_f[0][4]), download_name=download_f[0][3], as_attachment=True)
+    download_f = get_single_file(db, content_id, topic)
+    return send_file(BytesIO(download_f[4]), download_name=download_f[3], as_attachment=True)
 
 
-@app.route('/verify/<volunteer_id>')
+@app.route('/verify<volunteer_id>')
 def verify(volunteer_id):
     db = sqlite3.connect("bank_seta.db")
     verify_volunteer(db, volunteer_id)
     return render_template("screen.html")
 
 
-@app.route('/slots/<slot_id>')
+@app.route('/slots<slot_id>')
 def slots(slot_id):
     db = sqlite3.connect("bank_seta.db")
     update_slot_status(db, slot_id)
@@ -198,18 +215,25 @@ def periods():
     return render_template('slots.html', schedules=schedules, periods=p)
 
 
-@app.route('/delete_schedules/<schedule_id>')
+@app.route('/delete_schedules<schedule_id>')
 def delete_schedule(schedule_id):
     db = sqlite3.connect("bank_seta.db")
     delete_single_schedule(db, schedule_id)
     return redirect(url_for('periods'))
 
 
-@app.route('/my_schedules/<user_id>')
+@app.route('/my_schedules<user_id>')
 def my_schedules(user_id):
     db = sqlite3.connect("bank_seta.db")
     schedules = get_my_schedules(db, user_id)
     return render_template('myschedules.html', schedules=schedules)
+
+
+@app.route('/deleting_schedules<schedule_id>')
+def deleting_new_schedule(schedule_id):
+    db = sqlite3.connect("bank_seta.db")
+    delete_new_schedule(db, schedule_id)
+    return redirect(url_for('periods'))
 
 
 if __name__ == '__main__':

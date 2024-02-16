@@ -58,8 +58,6 @@ def register_user(db, username, email, usertype, password):
         db.commit()
         user_ID = cursor.execute("SELECT MAX(id) FROM Users WHERE type='Volunteer'")
         s_id = user_ID.fetchone()
-
-        print(s_id)
         cursor.execute("INSERT INTO Volunteers (id, status) VALUES(?,?)", (s_id[0], "Unverified"))
         db.commit()
     else:
@@ -98,7 +96,6 @@ def get_subjects_id(db):
 def insert_new_Maths(db, topic, sub_topic, content_name, source):
     cursor = db.cursor()
     subj_id = get_subjects_id(db)
-    print(subj_id[0])
     cursor.execute("INSERT INTO Maths (id, Topic, Sub_Topic, Content_Name, Source) VALUES (?, ?, "
                    "?, ?, ?)", (subj_id[0], topic, sub_topic, content_name, source))
     db.commit()
@@ -144,6 +141,9 @@ def All_Table(db):
     # cursor.execute("CREATE TABLE Volunteers(id INTEGER PRIMARY KEY, status VARCHAR(255) NOT NULL,FOREIGN KEY (id) "
     #                "REFERENCES Users(id))")
 
+    cursor.execute("CREATE TABLE History(id INTEGER NOT NULL, s_id INTEGER NOT NULL,PRIMARY KEY (id, s_id), "
+                   "FOREIGN KEY (s_id) REFERENCES Users(id), FOREIGN KEY (id) REFERENCES Subjects(id))")
+
     # cursor.execute("CREATE TABLE Volunteer_Schedule(s_id INTEGER NOT NULL, v_id INTEGER NOT NULL, PRIMARY KEY(s_id, "
     #                "v_id),FOREIGN KEY (s_id) REFERENCES Schedules(id), FOREIGN KEY (v_id) REFERENCES Volunteers(id))")
 
@@ -162,6 +162,21 @@ def get_content(db, search_string):
         s = f"SELECT * FROM Science WHERE Sub_Topic='{search_string.split('(')[0]}'"
         cursor.execute(s)
         download_file = cursor.fetchall()
+        cursor.close()
+    return download_file
+
+
+def get_single_file(db, search_id, search_string):
+    cursor = db.cursor()
+    if "Maths" in search_string:
+        s = f"SELECT * FROM Maths WHERE id=? AND Sub_Topic=?"
+        cursor.execute(s, (search_id, search_string.split('(')[0]))
+        download_file = cursor.fetchone()
+        cursor.close()
+    elif "Science" in search_string:
+        s = f"SELECT * FROM Science WHERE id=? AND Sub_Topic=?"
+        cursor.execute(s, (search_id, search_string.split('(')[0]))
+        download_file = cursor.fetchone()
         cursor.close()
     return download_file
 
@@ -229,8 +244,15 @@ def insert_schedule_volunteer(db, slot_id, volunteer_id):
 
 def delete_single_schedule(db, schedule_id):
     cursor = db.cursor()
-    cursor.execute("DELETE FROM Volunteer_Schedule WHERE s_id = ?", schedule_id)
-    cursor.execute("DELETE FROM Schedules WHERE id = ?", schedule_id)
+    cursor.execute("DELETE FROM Volunteer_Schedule WHERE s_id = ?", (schedule_id,))
+    cursor.execute("DELETE FROM Schedules WHERE id = ?", (schedule_id,))
+    db.commit()
+    cursor.close()
+
+
+def delete_new_schedule(db, schedule_id):
+    cursor = db.cursor()
+    cursor.execute("DELETE FROM Schedules WHERE id = ?", (schedule_id,))
     db.commit()
     cursor.close()
 
@@ -247,3 +269,38 @@ def get_my_schedules(db, user_id):
     download_file = cursor.fetchall()
     cursor.close()
     return download_file
+
+
+def ranking(db, content_id, current_rank):
+    cursor = db.cursor()
+    new_rank = int(get_current_rank(db, content_id)[0]) + int(current_rank)
+    sql = "UPDATE Subjects SET rank=? WHERE id=?"
+    cursor.execute(sql, (new_rank, content_id))
+    db.commit()
+    cursor.close()
+
+
+def insert_into_history(db, user_id, content_id):
+    cursor = db.cursor()
+    sql = "INSERT INTO History (id, s_id) VALUES (?, ?)"
+    cursor.execute(sql, (content_id, user_id))
+    db.commit()
+    cursor.close()
+
+
+def check_history(db, user_id, content_id):
+    cursor = db.cursor()
+    sql = "SELECT * FROM History WHERE id=? AND s_id=?"
+    cursor.execute(sql, (content_id, user_id))
+    download_file = cursor.fetchone()
+    cursor.close()
+    return download_file
+
+
+def get_current_rank(db, content_id):
+    cursor = db.cursor()
+    sql = "SELECT Subjects.rank FROM Subjects WHERE id=?"
+    cursor.execute(sql, (content_id,))
+    rank = cursor.fetchone()
+    cursor.close()
+    return rank
