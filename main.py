@@ -6,15 +6,12 @@ from flask import Flask, render_template, request, session, redirect, url_for, s
 from database import get_user_credentials, get_user_from_type, insert_new_schedule, insert_new_Maths, \
     insert_new_Science, get_volunteer_status, get_content, get_all_unverified_volunteer, verify_volunteer, \
     get_all_new_schedules, register_user, update_slot_status, insert_schedule_volunteer, all_schedules, \
-    delete_single_schedule, get_my_schedules, All_Table, insert_into_subjects, insert_into_history, check_history, \
-    get_current_rank, ranking, delete_new_schedule, get_single_file
+    delete_single_schedule, get_my_schedules, insert_into_subjects, insert_into_history, check_history, \
+    get_current_rank, ranking, delete_new_schedule, get_single_file, get_science_content, get_maths_content, \
+    deleting_content
 
 app = Flask(__name__)
 app.secret_key = "any"
-
-
-# db = sqlite3.connect("bank_seta.db")
-# All_Table(db)
 
 
 @app.route("/", methods=['POST', 'GET'])
@@ -60,6 +57,24 @@ def register():
             register_user(db, data['name'], data['email'], data['usertype'], data['pass'])
             return render_template("logout.html")
     return render_template("register.html")
+
+
+@app.route("/surf<topic>", methods=['GET', 'POST'])
+def surf(topic):
+    db = sqlite3.connect("bank_seta.db")
+    return_files = []
+    grades = []
+    contents = get_content(db, topic)
+
+    if contents:
+        for cont in contents:
+            return_files.append(check_history(db, session.get('user_id'), cont[0]))
+            grades.append(get_current_rank(db, cont[0]))
+
+        return render_template("download.html", name=session.get('user_name'), content=contents, topic=topic,
+                               return_f=return_files, rank=grades, len=len(contents))
+    return render_template("download.html", name=session.get('user_name'), content=contents, topic=topic, return_f=[],
+                           rank=[], len=0)
 
 
 @app.route("/rank<cont_id>/<cont_name>", methods=['GET', 'POST'])
@@ -144,20 +159,27 @@ def schedule():
 
 @app.route("/content", methods=['GET', 'POST'])
 def content():
-    return render_template("content.html", name=session.get('user_name'))
-
-
-@app.route("/surf<topic>", methods=['GET', 'POST'])
-def surf(topic):
     db = sqlite3.connect("bank_seta.db")
-    cont = get_content(db, topic)
-    if cont:
-        return_file = check_history(db, session.get('user_id'), cont[0][0])
-        grade = get_current_rank(db, cont[0][0])
-        return render_template("download.html", name=session.get('user_name'), content=cont, topic=topic,
-                               return_f=return_file, rank=grade[0])
-    return render_template("download.html", name=session.get('user_name'), content=cont, topic=topic, return_f=[],
-                           rank=0)
+    maths_grades = []
+    science_grades = []
+
+    maths_content = get_maths_content(db)
+    science_content = get_science_content(db)
+
+    if maths_content or science_content:
+        if maths_content:
+            for cont in maths_content:
+                maths_grades.append(get_current_rank(db, cont[0]))
+
+        if science_content:
+            for cont in science_content:
+                science_grades.append(get_current_rank(db, cont[0]))
+
+        return render_template("content.html", name=session.get('user_name'), maths_content=maths_content,
+                               science_content=science_content, maths_rank=maths_grades, science_rank=science_grades, maths_len=len(maths_content), science_len=len(science_content))
+
+    return render_template("content.html", name=session.get('user_name'), maths_content=[],
+                           science_content=[], maths_rank=0, science_rank=0, maths_len=0, science_len=0)
 
 
 @app.route("/student", methods=['GET', 'POST'])
@@ -234,6 +256,13 @@ def deleting_new_schedule(schedule_id):
     db = sqlite3.connect("bank_seta.db")
     delete_new_schedule(db, schedule_id)
     return redirect(url_for('periods'))
+
+
+@app.route('/delete_content<content_id>/<subject>')
+def delete_content(content_id, subject):
+    db = sqlite3.connect("bank_seta.db")
+    deleting_content(db, content_id, subject)
+    return redirect(url_for('content'))
 
 
 if __name__ == '__main__':

@@ -304,3 +304,33 @@ def get_current_rank(db, content_id):
     rank = cursor.fetchone()
     cursor.close()
     return rank
+
+
+def get_maths_content(db):
+    cursor = db.cursor()
+    s = f"SELECT * FROM Maths"
+    cursor.execute(s)
+    maths_file = cursor.fetchall()
+    cursor.close()
+    return maths_file
+
+
+def get_science_content(db):
+    cursor = db.cursor()
+    s = f"SELECT * FROM Science"
+    cursor.execute(s)
+    science_file = cursor.fetchall()
+    cursor.close()
+    return science_file
+
+
+def deleting_content(db, content_id, subject):
+    cursor = db.cursor()
+    if 'Maths' in subject:
+        cursor.execute("DELETE FROM Maths WHERE id = ?", (content_id,))
+    elif 'Science' in subject:
+        cursor.execute("DELETE FROM Science WHERE id = ?", (content_id,))
+
+    cursor.execute("DELETE FROM Subjects WHERE id = ?", (content_id,))
+    db.commit()
+    cursor.close()

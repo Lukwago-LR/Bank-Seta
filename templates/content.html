@@ -56,58 +56,76 @@
 </section>
 <br><br><br><br>
 
-<!--downloads-->
+<!--content-->
 <section id="download">
     <div class="container">
         <div class="row">
-            <div class="col-12 download">
+            <div class="col-6 download">
+                <div class="col-12 head">
+                    <h2 class="text-decoration-underline text-success">Math Content</h2>
+                </div>
+                {%if maths_content%}
+                {%for i in range(0,maths_len)%}
                 <div class="row download-rows">
                     <div class="col-md-3 col-12">
-                        <p class="text-light">Formula for finite geometric series</p>
+                        <p class="text-light">{{maths_content[i][3]}}</p>
                     </div>
                     <div class="col-md-3 col-12">
-                        <button class="button">View</button>
-                        <span> <button class="button">Download</button></span>
+                        {% if "pdf" in maths_content[i][3] %}
+                        <button class="button"><a
+                                href="{{url_for('download', content_id=maths_content[i][0], topic=maths_content[i][2]+'(Maths)')}}">Download</a>
+                        </button>
+                        {% else %}
+                        <button class="button"><a href="{{maths_content[i][4]}}" target="_blank">Watch</a></button>
+                        {% endif %}
                     </div>
                     <div class="col-md-3 col-12">
-                        <p class="text-light">Rank <span class="rank text-light">3</span></p>
+                        <span class="rank text-light">{{maths_rank[i][0]}}</span>
                     </div>
                     <div class="col-md-3 col-12">
-                        <button class="button">Delete</button>
+                        <button><a class="text-danger" href="{{url_for('delete_content', content_id=maths_content[i][0], subject='Maths')}}">Delete</a></button>
                     </div>
+                </div>
+                {%endfor%}
+                {%else%}
+                <div class="col-12 download">
+                    <h3 class="card-title text-danger text-center">No Maths available </h3>
+                </div>
+                {%endif%}
+            </div>
 
+            <div class="col-6 download">
+                <div class="col-12 head">
+                    <h2 class="text-decoration-underline text-success">Science Content</h2>
                 </div>
+                {%if science_content%}
+                {%for i in range(0,science_len)%}
                 <div class="row download-rows">
                     <div class="col-md-3 col-12">
-                        <p class="text-light"> Sum of the first n terms in geometric series</p>
+                        <p class="text-light">{{science_content[i][3]}}</p>
                     </div>
                     <div class="col-md-3 col-12">
-                        <button class="button">View</button>
-                        <span> <button class="button">Download</button></span>
+                        {% if "pdf" in science_content[i][3] %}
+                        <button class="button"><a
+                                href="{{url_for('download', content_id=science_content[i][0], topic=science_content[i][2]+'(Science)')}}">Download</a>
+                        </button>
+                        {% else %}
+                        <button class="button"><a href="{{science_content[i][4]}}" target="_blank">Watch</a></button>
+                        {% endif %}
                     </div>
                     <div class="col-md-3 col-12">
-                        <p class="text-light">Rank <span class="rank text-light">3</span></p>
+                        <span class="rank text-light">{{science_rank[i][0]}}</span>
                     </div>
                     <div class="col-md-3 col-12">
-                        <button class="button">Delete</button>
+                        <button> <a class="text-danger" href="{{url_for('delete_content', content_id=science_content[i][0], subject='Science')}}">Delete</a></button>
                     </div>
                 </div>
-                <div class="row download-rows">
-                    <div class="col-md-3 col-12">
-                        <p class="text-light">Calculating the average of a geometric series</p>
-                    </div>
-                    <div class="col-md-3 col-12">
-                        <button class="button">View</button>
-                        <span> <button class="button">Download</button></span>
-                    </div>
-                    <div class="col-md-3 col-12">
-                        <p class="text-light">Rank <span class="rank text-light">3</span></p>
-                    </div>
-                    <div class="col-md-3 col-12">
-                        <button class="button">Delete</button>
-                    </div>
-
+                {%endfor%}
+                {%else%}
+                <div class="col-12 download">
+                    <h3 class="card-title text-danger text-center">No Science Content available </h3>
                 </div>
+                {%endif%}
             </div>
         </div>
     </div>

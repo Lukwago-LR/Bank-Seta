@@ -62,23 +62,23 @@
         <div class="row">
             <div class="col-12 download">
                  {%if content%}
-                    {%for material in content%}
+                    {%for i in range(0,len)%}
                         <div class="row download-rows">
                             <div class="col-md-4 col-12">
-                                <p class="text-light">{{material[3]}}</p>
+                                <p class="text-light">{{content[i][3]}}</p>
                             </div>
                             <div class="col-md-4 col-12">
-                                 {% if "pdf" in material[3] %}
-                                    <button class="button"><a href="{{url_for('download', content_id=material[0], topic=topic)}}">Download</a></button>
+                                 {% if "pdf" in content[i][3] %}
+                                    <button class="button"><a href="{{url_for('download', content_id=content[i][0], topic=topic)}}">Download</a></button>
                                  {% else %}
-                                    <button class="button"><a target="_blank" href="{{material[4]}}">Watch</a></button>
+                                    <button class="button"><a target="_blank" href="{{content[i][4]}}">Watch</a></button>
                                   {% endif %}
                             </div>
                             <div class="col-md-4 col-12">
-                                {%if not return_f%}
-                                     <a class="text-light" href="{{ url_for('rank', cont_id=material[0], cont_name=material[3]) }}">Rank</a>
+                                {%if not return_f[i]%}
+                                     <a class="text-light" href="{{ url_for('rank', cont_id=content[i][0], cont_name=content[i][3]) }}">Rank</a>
                                 {%endif%}
-                                 <span class="rank text-light">{{rank}}</span>
+                                 <span class="rank text-light">{{rank[i][0]}}</span>
                             </div>
                         </div>
                     {%endfor%}
