@@ -15,9 +15,9 @@ def Insert_Into_User(db):
     cursor.close()
 
 
-def get_user_credentials(db, name, password):
+def get_user_credentials(db, email):
     cursor = db.cursor()
-    cursor.execute("SELECT * FROM Users WHERE name=? and password=?", (name, password))
+    cursor.execute("SELECT * FROM Users WHERE email=?", (email,))
     user = cursor.fetchone()
     cursor.close()
     return user
@@ -308,7 +308,7 @@ def get_current_rank(db, content_id):
 
 def get_maths_content(db):
     cursor = db.cursor()
-    s = f"SELECT * FROM Maths"
+    s = f"SELECT * FROM Maths INNER JOIN Subjects ON Maths.id=Subjects.id ORDER BY Subjects.rank DESC"
     cursor.execute(s)
     maths_file = cursor.fetchall()
     cursor.close()
@@ -317,7 +317,7 @@ def get_maths_content(db):
 
 def get_science_content(db):
     cursor = db.cursor()
-    s = f"SELECT * FROM Science"
+    s = f"SELECT * FROM Science INNER JOIN Subjects ON Science.id=Subjects.id ORDER BY Subjects.rank DESC"
     cursor.execute(s)
     science_file = cursor.fetchall()
     cursor.close()
@@ -334,3 +334,26 @@ def deleting_content(db, content_id, subject):
     cursor.execute("DELETE FROM Subjects WHERE id = ?", (content_id,))
     db.commit()
     cursor.close()
+
+
+# Notification module
+def new_volunteer_log(db, user_id):
+    pass
+
+
+def complete_verification(user_id):
+    pass
+
+
+def new_content_uploaded():
+    pass
+
+
+# Account Management
+def change_password():
+    pass
+
+
+def change_username():
+    pass
+

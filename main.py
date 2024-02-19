@@ -9,6 +9,7 @@ from database import get_user_credentials, get_user_from_type, insert_new_schedu
     delete_single_schedule, get_my_schedules, insert_into_subjects, insert_into_history, check_history, \
     get_current_rank, ranking, delete_new_schedule, get_single_file, get_science_content, get_maths_content, \
     deleting_content
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.secret_key = "any"
@@ -18,26 +19,28 @@ app.secret_key = "any"
 def login():
     if request.method == "POST":
         data = request.form
-        session['user_name'] = data['name']
         db = sqlite3.connect("bank_seta.db")
-        user = get_user_credentials(db, data['name'], data['password'])
+        user = get_user_credentials(db, data['email'])
         if user:
             session['user_id'] = user[0]
-            if data["name"] == user[1] and data["password"] == user[3] and data["users"] == user[4]:
+            session['user_name'] = user[1]
+            if check_password_hash(user[3], data["password"]) and data["users"] == user[4]:
                 if user[4] == "Student":
-                    return render_template("student.html", name=data["name"], msg_sent=True)
+                    return render_template("student.html", name=user[1], msg_sent=True)
                 elif user[4] == "Administrator":
-                    return render_template("administrator.html", name=data["name"], msg_sent=True)
+                    return render_template("administrator.html", name=user[1], msg_sent=True)
                 elif user[4] == "Volunteer":
                     status = get_volunteer_status(db, user[0])
                     if "Unverified" in status:
-                        return render_template("verification.html", name=data["name"], msg_sent=True)
+                        return render_template("verification.html", name=user[1], msg_sent=True)
                     else:
                         schedules = get_all_new_schedules(db, "New")
-                        return render_template("volunteer.html", name=data["name"], schedules=schedules,
+                        return render_template("volunteer.html", name=user[1], schedules=schedules,
                                                user_id=user[0])
             else:
                 return render_template("login.html", login_message="Invalid credentials")
+        else:
+            return render_template("login.html", login_message="Invalid credentials")
 
     return render_template("login.html", msg_sent=False)
 
@@ -54,7 +57,7 @@ def register():
         data = request.form
         if data['pass'] == data['password_confirm']:
             db = sqlite3.connect("bank_seta.db")
-            register_user(db, data['name'], data['email'], data['usertype'], data['pass'])
+            register_user(db, data['name'], data['email'], data['usertype'], generate_password_hash(data['pass']))
             return render_template("logout.html")
     return render_template("register.html")
 
@@ -176,7 +179,8 @@ def content():
                 science_grades.append(get_current_rank(db, cont[0]))
 
         return render_template("content.html", name=session.get('user_name'), maths_content=maths_content,
-                               science_content=science_content, maths_rank=maths_grades, science_rank=science_grades, maths_len=len(maths_content), science_len=len(science_content))
+                               science_content=science_content, maths_rank=maths_grades, science_rank=science_grades,
+                               maths_len=len(maths_content), science_len=len(science_content))
 
     return render_template("content.html", name=session.get('user_name'), maths_content=[],
                            science_content=[], maths_rank=0, science_rank=0, maths_len=0, science_len=0)
