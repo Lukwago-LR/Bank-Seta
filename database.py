@@ -141,8 +141,8 @@ def All_Table(db):
     # cursor.execute("CREATE TABLE Volunteers(id INTEGER PRIMARY KEY, status VARCHAR(255) NOT NULL,FOREIGN KEY (id) "
     #                "REFERENCES Users(id))")
 
-    cursor.execute("CREATE TABLE History(id INTEGER NOT NULL, s_id INTEGER NOT NULL,PRIMARY KEY (id, s_id), "
-                   "FOREIGN KEY (s_id) REFERENCES Users(id), FOREIGN KEY (id) REFERENCES Subjects(id))")
+    # cursor.execute("CREATE TABLE History(id INTEGER NOT NULL, s_id INTEGER NOT NULL,PRIMARY KEY (id, s_id), "
+    #                "FOREIGN KEY (s_id) REFERENCES Users(id), FOREIGN KEY (id) REFERENCES Subjects(id))")
 
     # cursor.execute("CREATE TABLE Volunteer_Schedule(s_id INTEGER NOT NULL, v_id INTEGER NOT NULL, PRIMARY KEY(s_id, "
     #                "v_id),FOREIGN KEY (s_id) REFERENCES Schedules(id), FOREIGN KEY (v_id) REFERENCES Volunteers(id))")
