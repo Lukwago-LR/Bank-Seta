@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width initial-scale=1.0" name="viewport">
-    <title>Bank Seta</title>
-    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
-          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" rel="stylesheet">
-    <link href=".././static/style.css" rel="stylesheet">
-</head>
-<body>
-
+{% extends 'base.html'%}
+{% block home %} <a class="nav-link active" href="{{url_for('administrator')}}">Home</a> {% endblock %}
+{% block logout %}<a class="nav-link text-danger active" href="{{ url_for('logout') }}">Logout</a>{% endblock %}
 <!--title-->
 <section id="title">
     <div class="container">
@@ -17,50 +8,18 @@
             <div class="col-12">
                 <p class="title-bankseta">BANK SETA</p>
             </div>
+            <div class="col-12 head">
+                <h2>Upload Content</h2>
+            </div>
         </div>
     </div>
 </section>
 
-<!--navigation bar-->
-<section id="navigation">
-    <nav class="navbar navbar-expand-lg navbar-light">
 
-        <button aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation"
-                class="navbar-toggler"
-                data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
-            <span><img src="../static/images/navbar-icon.jpg" width="30px"></span>
-        </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{url_for('administrator')}}">Home</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <span aria-expanded="false" class="nav-link dropdown-toggle"
-                          data-toggle="dropdown"
-                          href="#" id="navbarDropdown" role="button">
-                    Profile</span>
-                    <div class="dropdown-content">
-                        <a class="text-light" href="#">Account Details</a>
-                        <a class="text-light" href="#">Notifications</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-danger" href="{{ url_for('logout') }}">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</section>
 <br><br><br>
-<div class="row">
-    <div class="col-12 head">
-        <h2>Upload Content</h2>
-    </div>
-</div>
 
-<!--login-->
+{% block body %}
 <section>
     <div class="container">
         <div class="row">
@@ -72,56 +31,79 @@
                         <div class="sched">
                             <label for="topics">Choose a topic:</label>
                             <select id="topics" name="topics" required>
-                                <option value="Number patterns(Sequences and Series-Maths)">Number patterns</option>
+                                <option value="Number patterns(Sequences and Series-Maths)">Number patterns
+                                </option>
                                 <option value="Sequences(Sequences and Series-Maths)">Sequences</option>
                                 <option value="Series(Sequences and Series-Maths)">Series</option>
-                                <option value="Function definition(Functions-Maths)">Function definition</option>
+                                <option value="Function definition(Functions-Maths)">Function definition
+                                </option>
                                 <option value="Inverses(Functions-Maths)">Inverses</option>
                                 <option value="Exponential(Functions-Maths)">Exponential</option>
                                 <option value="Logarithmic(Functions-Maths)">Logarithmic</option>
                                 <option value="Trigonometry(Trigonometry-Maths)">Trigonometry</option>
                                 <option value="Euclidean Geometry(Geometry-Maths)">Euclidean Geometry</option>
                                 <option value="Analytical Geometry(Geometry-Maths)">Analytical Geometry</option>
-                                <option value="Differential Calculus(Calculus-Maths)">Differential Calculus</option>
+                                <option value="Differential Calculus(Calculus-Maths)">Differential Calculus
+                                </option>
                                 <option value="Polynomials(Calculus-Maths)">Polynomials</option>
-                                <option value="Finance growth and decay-continuation(Finance-Maths)">Finance growth and
+                                <option value="Finance growth and decay-continuation(Finance-Maths)">Finance
+                                    growth and
                                     decay(continuation)
                                 </option>
                                 <option value="Statistics(Statistics and Probability-Maths)">Statistics</option>
-                                <option value="Counting and probability(Statistics and Probability-Maths)">Counting and
+                                <option value="Counting and probability(Statistics and Probability-Maths)">
+                                    Counting and
                                     probability
                                 </option>
-                                <option value="Momentum & Impulse(Mechanics-Science)">Momentum & Impulse</option>
-                                <option value="Vertical projectile motion(Mechanics-Science)">Vertical projectile
+                                <option value="Momentum & Impulse(Mechanics-Science)">Momentum & Impulse
+                                </option>
+                                <option value="Vertical projectile motion(Mechanics-Science)">Vertical
+                                    projectile
                                     motion
                                 </option>
-                                <option value="Work,energy and power(Mechanics-Science)">Work,energy and power</option>
-                                <option value="Rate and extent of reaction(Chemical Change-Science)">Rate and extent of
+                                <option value="Work,energy and power(Mechanics-Science)">Work,energy and power
+                                </option>
+                                <option value="Rate and extent of reaction(Chemical Change-Science)">Rate and
+                                    extent of
                                     reaction
                                 </option>
-                                <option value="Chemical equilibrium(Chemical Change-Science)">Chemical equilibrium
+                                <option value="Chemical equilibrium(Chemical Change-Science)">Chemical
+                                    equilibrium
                                 </option>
-                                <option value="Acids and bases(Chemical Change-Science)">Acids and bases</option>
-                                <option value="Electrochemical reactions(Chemical Change-Science)">Electrochemical
+                                <option value="Acids and bases(Chemical Change-Science)">Acids and bases
+                                </option>
+                                <option value="Electrochemical reactions(Chemical Change-Science)">
+                                    Electrochemical
                                     reactions
                                 </option>
-                                <option value="Electric circuits(Electricity & Magnetism-Science)">Electric circuits
+                                <option value="Electric circuits(Electricity & Magnetism-Science)">Electric
+                                    circuits
                                 </option>
                                 <option value="Electrodynamics(Electricity & Magnetism-Science)">Electrodynamics
                                 </option>
-                                <option value="Optical phenomena and properties of materials(Matter and Materials-Science)">
+                                <option
+                                    value="Optical phenomena and properties of materials(Matter and Materials-Science)">
                                     Optical phenomena and properties of materials
                                 </option>
-                                <option value="Organic molecules(Matter and Materials-Science)">Organic molecules
+                                <option value="Organic molecules(Matter and Materials-Science)">Organic
+                                    molecules
                                 </option>
-                                <option value="Doppler Effect(Waves, Sound & Light-Science)">Doppler Effect</option>
+                                <option value="Doppler Effect(Waves, Sound & Light-Science)">Doppler Effect
+                                </option>
                             </select>
                         </div>
-                        <label for="content_name">Input video name :</label>
+                    
+                        <label for="content_name">Input video name:&nbsp;</label>
                         <input id="content_name" name="content_name" required type="text"><br>
-                        <label for="videoInput">Input video URL :&nbsp; &nbsp;</label>
-                        <input id="videoInput" name="videoInput" required type="text">
-                        <button class="btn-upload" name="video_submit" type="submit">Upload</button>
+                        <label for="videoInput">Input video URL:&nbsp; &nbsp;</label>
+                        <span class="upload-icon">
+                            <img src="static\assets\images\uploading.png" width="55rem" height="52rem" alt="">
+                        </span>
+                        <input id="videoInput" name="videoInput" required type="text"><br><br>                       
+                        
+                        <button class="btn-upload" name="video_submit" type="submit">
+                             Upload
+                        </button>
                     </div>
                 </form>
                 <br>
@@ -131,53 +113,72 @@
                         <div class="sched">
                             <label for="topics2">Choose a topic:</label>
                             <select id="topics2" name="topics" required>
-                                <option value="Number patterns(Sequences and Series-Maths)">Number patterns</option>
+                                <option value="Number patterns(Sequences and Series-Maths)">Number patterns
+                                </option>
                                 <option value="Sequences(Sequences and Series-Maths)">Sequences</option>
                                 <option value="Series(Sequences and Series-Maths)">Series</option>
-                                <option value="Function definition(Functions-Maths)">Function definition</option>
+                                <option value="Function definition(Functions-Maths)">Function definition
+                                </option>
                                 <option value="Inverses(Functions-Maths)">Inverses</option>
                                 <option value="Exponential(Functions-Maths)">Exponential</option>
                                 <option value="Logarithmic(Functions-Maths)">Logarithmic</option>
                                 <option value="Trigonometry(Trigonometry-Maths)">Trigonometry</option>
                                 <option value="Euclidean Geometry(Geometry-Maths)">Euclidean Geometry</option>
                                 <option value="Analytical Geometry(Geometry-Maths)">Analytical Geometry</option>
-                                <option value="Differential Calculus(Calculus-Maths)">Differential Calculus</option>
+                                <option value="Differential Calculus(Calculus-Maths)">Differential Calculus
+                                </option>
                                 <option value="Polynomials(Calculus-Maths)">Polynomials</option>
-                                <option value="Finance growth and decay-continuation(Finance-Maths)">Finance growth and
+                                <option value="Finance growth and decay-continuation(Finance-Maths)">Finance
+                                    growth and
                                     decay(continuation)
                                 </option>
                                 <option value="Statistics(Statistics and Probability-Maths)">Statistics</option>
-                                <option value="Counting and probability(Statistics and Probability-Maths)">Counting and
+                                <option value="Counting and probability(Statistics and Probability-Maths)">
+                                    Counting and
                                     probability
                                 </option>
-                                <option value="Momentum & Impulse(Mechanics-Science)">Momentum & Impulse</option>
-                                <option value="Vertical projectile motion(Mechanics-Science)">Vertical projectile
+                                <option value="Momentum & Impulse(Mechanics-Science)">Momentum & Impulse
+                                </option>
+                                <option value="Vertical projectile motion(Mechanics-Science)">Vertical
+                                    projectile
                                     motion
                                 </option>
-                                <option value="Work,energy and power(Mechanics-Science)">Work,energy and power</option>
-                                <option value="Rate and extent of reaction(Chemical Change-Science)">Rate and extent of
+                                <option value="Work,energy and power(Mechanics-Science)">Work,energy and power
+                                </option>
+                                <option value="Rate and extent of reaction(Chemical Change-Science)">Rate and
+                                    extent of
                                     reaction
                                 </option>
-                                <option value="Chemical equilibrium(Chemical Change-Science)">Chemical equilibrium
+                                <option value="Chemical equilibrium(Chemical Change-Science)">Chemical
+                                    equilibrium
                                 </option>
-                                <option value="Acids and bases(Chemical Change-Science)">Acids and bases</option>
-                                <option value="Electrochemical reactions(Chemical Change-Science)">Electrochemical
+                                <option value="Acids and bases(Chemical Change-Science)">Acids and bases
+                                </option>
+                                <option value="Electrochemical reactions(Chemical Change-Science)">
+                                    Electrochemical
                                     reactions
                                 </option>
-                                <option value="Electric circuits(Electricity & Magnetism-Science)">Electric circuits
+                                <option value="Electric circuits(Electricity & Magnetism-Science)">Electric
+                                    circuits
                                 </option>
                                 <option value="Electrodynamics(Electricity & Magnetism-Science)">Electrodynamics
                                 </option>
-                                <option value="Optical phenomena and properties of materials(Matter and Materials-Science)">
+                                <option
+                                    value="Optical phenomena and properties of materials(Matter and Materials-Science)">
                                     Optical phenomena and properties of materials
                                 </option>
-                                <option value="Organic molecules(Matter and Materials-Science)">Organic molecules
+                                <option value="Organic molecules(Matter and Materials-Science)">Organic
+                                    molecules
                                 </option>
-                                <option value="Doppler Effect(Waves, Sound & Light-Science)">Doppler Effect</option>
+                                <option value="Doppler Effect(Waves, Sound & Light-Science)">Doppler Effect
+                                </option>
                             </select>
                         </div>
-                        <label for="file">Select a PDF file</label><br>
-                        <input accept=".pdf" id="file" name="file" required type="file">
+                        <label for="file">Select a PDF file:</label>
+                        <span class="upload-icon">
+                            <img src="static\assets\images\uploading.png" width="55rem" height="52rem" alt="">
+                        </span>
+                        <input accept=".pdf" id="file" name="file" required type="file"><br><br>
                         <button class="btn-upload" name="pdf_submit" type="submit">Upload</button>
                     </div>
                 </form>
@@ -188,20 +189,4 @@
         </div>
     </div>
 </section>
-
-<!--footer-->
-<footer id="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="footer-text">
-                    <h5>Contact Us</h5>
-                    <span>Email: info@schoolwebsite.com</span> &nbsp; &nbsp; &nbsp; <span>Phone: (+27) 456-7890</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-
-</body>
-</html>
+{% endblock %}

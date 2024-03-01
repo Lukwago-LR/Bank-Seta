@@ -71,7 +71,7 @@ def register_user(db, username, email, usertype, password):
 def insert_new_schedule(db, status, subject, topic, fro, to, d):
     cursor = db.cursor()
     cursor.execute("INSERT INTO Schedules (status, subject, topic,  slot_time, slot_date) VALUES (?, "
-                   "?, ?, ?, ?)", (status, subject, topic, f"{fro}" + "-" + f"{to}", d))
+                   "?, ?, ?, ?)", (status, subject, topic, f"{fro}" + " -" + f"{to}", d))
     db.commit()
     cursor.close()
 
@@ -335,25 +335,4 @@ def deleting_content(db, content_id, subject):
     db.commit()
     cursor.close()
 
-
-# Notification module
-def new_volunteer_log(db, user_id):
-    pass
-
-
-def complete_verification(user_id):
-    pass
-
-
-def new_content_uploaded():
-    pass
-
-
-# Account Management
-def change_password():
-    pass
-
-
-def change_username():
-    pass
 
