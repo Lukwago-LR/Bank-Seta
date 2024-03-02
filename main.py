@@ -45,10 +45,10 @@ def login():
     return render_template("login.html", msg_sent=False)
 
 
-@app.route("/logout", methods=['GET'])
+@app.route("/", methods=['GET'])
 def logout():
     session.clear()
-    return render_template("logout.html")
+    return render_template("login.html")
 
 
 @app.route("/register", methods=['POST', 'GET'])
@@ -87,9 +87,9 @@ def rank(cont_id, cont_name):
         db = sqlite3.connect("bank_seta.db")
         insert_into_history(db, session.get('user_id'), cont_id)
         ranking(db, cont_id, data['rank_name'])
-        return render_template("student.html", name=session.get('user_name'))
+        return render_template("rank.html", student_id=session.get('user_id'), content_name=cont_name, show=False)
     else:
-        return render_template("rank.html", student_id=session.get('user_id'), content_name=cont_name)
+        return render_template("rank.html", student_id=session.get('user_id'), content_name=cont_name, show=True)
 
 
 @app.route("/upload", methods=['GET', 'POST'])

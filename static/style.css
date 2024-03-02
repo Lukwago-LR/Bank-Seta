@@ -121,25 +121,13 @@ a {
   text-decoration: none;
 }
 
+.type-center{
+  margin-left:30% ;
+  margin-left:30% ;
+}
+
 
 /*register*/
-#register {
-  width: 40%;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0.5rem;
-  margin-top: 3em;
-}
-
-#register .card-body .register-btn {
-  text-align: center;
-  padding: 0.8em;
-}
-
-#register .card-body form {
-  padding: 10px;
-}
-
 .form-check {
   padding: 10px;
 }
@@ -240,12 +228,12 @@ ul nav .navbar-toggler {
 }
 
 .maths{
-  background-image: url('assets/images/maths.jpeg');
+  /* background-image: url('assets/images/maths.jpeg'); */
   margin: 20px;
 }
 
 .science{
-  background-image: url('assets/images/science.jpeg');
+  /* background-image: url('assets/images/science.jpeg'); */
   margin: 20px;
  
 }
@@ -307,6 +295,11 @@ ul nav .navbar-toggler {
   text-align: center;
   font-weight: bold;
   font-size: 1.5rem;
+}
+
+.footer{
+  bottom: 0;
+  width: 100%;
 }
 
 .footer-text {
@@ -412,10 +405,16 @@ margin: 0.5px;
 }
 
 /*Scheduling*/
+.makeschedule{
+  float: right;
+}
+
 .card {
+  background-image: url('assets/images/practice.jpg');
   margin: 2.5px;
   text-align: center;
   min-width: 17em;
+  color:white
 }
 
 .card-schedule {
@@ -428,11 +427,11 @@ margin: 0.5px;
 }
 
 .rank {
-  border: solid 1px red;
-  font-size: 20px;
+  border: solid 0.2px rgb(13, 239, 69);
+  font-size: 15px;
   font-weight: bold;
   border-radius: 100%;
-  background-color: red;
+  background-color: rgb(2, 32, 11);
 }
 
 /*Uploading*/
@@ -479,3 +478,12 @@ margin: 0.5px;
 .sched {
   margin: 5px;
 }
+
+/* Images */
+.image {
+  position: absolute;
+  height:55%;
+  width:100%;
+  z-index: -1;
+}
+

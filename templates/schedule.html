@@ -6,11 +6,12 @@
 <!--scheduling-->
 <section id="scheduling">
     <div class="container">
-        <h2 class="head">MAKE SCHEDULE</h2>
+        <h2 class="head text-decoration-underline">MAKE SCHEDULE</h2>
         <div class="row">
             <div class="col-12 schedule">
                 <div class="card-body">
-                    <form id="scheduleForm" method="POST" >
+                    <form id="scheduleForm" method="POST">
+                        <img class="makeschedule" src="static\assets\images\makeSchedule.jpeg">
                         <div class="sched">
                             <label for="subjects">Choose a subject:</label>
                             <select id="subjects" name="scheduled_subject" required>
@@ -18,28 +19,29 @@
                                 <option value="SCIENCE">Science</option>
                             </select>
                         </div>
+                       
                         <div class="sched">
                             <label for="topic">Topic:</label>
                             <input name="topic" id="topic" type="text" required>
                         </div>
-
+        
                         <div class="sched">
                             <label for="from">From:</label>
                             <input id="from" name="from" type="time" required>
 
                             <span><label for="to">To:</label>
-                            <input id="to" name="to" type="time" required> </span>
+                                <input id="to" name="to" type="time" required> </span>
                         </div>
 
                         <div class="sched">
                             <label for="datepicker">Select a Date:</label>
                             <input id="datepicker" name="datepicker" type="date" required>
                         </div>
-                        <input type="submit" value="Submit">
+                        <input type="submit" class="btn btn-primary" value="Submit">
                     </form>
                 </div>
             </div>
-             <h4 class="col-12 text-danger text-center">{{upload_status}}</h4>
+            <h4 class="message text-light text-center">{{upload_status}}</h4>
         </div>
     </div>
 </section>

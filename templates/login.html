@@ -1,4 +1,8 @@
 {% extends 'base.html'%}
+{% block home %}  
+<a class="nav-link active" href="#">Forum</a>
+<a class="nav-link text-light active" href="{{ url_for('register') }}">Sign up</a>
+{% endblock %}
 
 {% block body%}
 
@@ -22,16 +26,14 @@
                     <span class="fas fa-user"></span>
                     <input type="email" id="email" name="email" placeholder="Email" required>
                 </div>
-                <div class="input-group">
-                    <span class="fas fa-user"></span> <br>
-                    <select id="usertype" name="users">
+                <div class="input-group type-center">
+                    <select class="text-center" id="usertype" name="users">
                         <option value="Student">Student</option>
                         <option value="Administrator">Administrator</option>
                         <option value="Volunteer">Volunteer</option>
                     </select>
                 </div>
                 <div class="input-group">
-                    <span class="fas fa-lock"></span>
                     <input type="password" id="password" name="password" placeholder="Password" required>
                 </div>
                 <div class="input-group">

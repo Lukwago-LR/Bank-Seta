@@ -18,56 +18,61 @@
 <section id="heading">
     <div class="container">
         <div class="row">
-            {%if schedules%}
-            {%for sched in schedules%}
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="shedule-card card">
-                    <div class="card-body">
-                        <p class="card-title text-decoration-underline"><span><b>Volunteer</b> : </span>{{sched[0]}}</p>
-                        <p class="card-title sch-card"><span><b>Email</b> : </span>{{sched[1]}}</p>
-                        <p class="card-title sch-card"><span><b>Subject</b> : </span>{{sched[2]}}</p>
-                        <p class="text-topic sch-card"><span><b>Topic</b> : </span>{{sched[3]}}</p>
-                        <p class="card-text sch-card"><span><b>Time</b> : </span>{{sched[4]}} ({{sched[5]}})</p>
-                        <p class="card-text sch-card"><span><b>Status</b> : </span><b class="text-success">{{sched[6]}}</b></p>
-                        <a class="btn btn-danger stretched-link sch-card"
-                            href="{{url_for('delete_schedule', schedule_id=sched[7])}}"><b
-                                class="text-light">Delete</b></a>
-                    </div>
-                </div>
-            </div>
-            {%endfor%}
-            {%else%}
-            <div class="col-12 message">
-                <h3 class="card-title text-danger text-center">No scheduled slots!</h3>
-            </div>
-            {%endif%}
-        </div>
-        <div class="row">
-            {%if periods%}
-            {%for sched in periods%}
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="card-schedule card">
-                    <div class="card-body">
+            <div class="col-6">
+                {%if schedules%}
+                {%for sched in schedules%}
+                <div class="col-sm-12">
+                    <div class="card">
                         <div class="card-body">
-                            <p class="card-title text-decoration-underline">{{sched[2]}}</p>
-                            <p class="text-topic sch-card"><span><b>Topic</b> : </span>{{sched[3]}}</p>
-                            <p class="card-text sch-card"><span><b>Time</b> : </span>{{sched[4]}} ({{sched[5]}})</p>
-                            <p class="card-text sch-card"><span><b>Status</b> : </span><b class="text-primary">{{sched[1]}}</b>
-                            </p>
-                            <a class="btn btn-danger stretched-link"
-                                href="{{url_for('deleting_new_schedule', schedule_id=sched[0])}}">
-                                <b class="text-light">Delete</b> </a>
+                            <p class="card-title text-decoration-underline"><span><b>Volunteer</b> : </span>{{sched[0]}}</p>
+                            <p class="card-title"><span><b>Email</b> : </span>{{sched[1]}}</p>
+                            <p class="card-title"><span><b>Subject</b> : </span>{{sched[2]}}</p>
+                            <p class="text-topic"><span><b>Topic</b> : </span>{{sched[3]}}</p>
+                            <p class="card-text"><span><b>Time</b> : </span>{{sched[4]}} ({{sched[5]}})</p>
+                            <p class="card-text"><span><b>Status</b> : </span><b class="text-success">{{sched[6]}}</b></p>
+                            <a class="btn btn-danger stretched-link sch-card"
+                                href="{{url_for('delete_schedule', schedule_id=sched[7])}}"><b
+                                    class="text-light">Delete</b></a>
                         </div>
                     </div>
                 </div>
+                {%endfor%}
+                {%else%}
+                <div class="col-12 message">
+                    <h3 class="card-title text-danger text-center">No scheduled slots</h3>
+                </div>
+                {%endif%}
+            </div> 
+
+            <div class="col-6">
+                {%if periods%}
+                {%for sched in periods%}
+                <div class="col-sm-12">
+                    <div class="card-schedule card">
+                        <div class="card-body">
+                            <div class="card-body">
+                                <p class="card-title text-decoration-underline">{{sched[2]}}</p>
+                                <p class="text-topic"><span><b>Topic</b> : </span>{{sched[3]}}</p>
+                                <p class="card-text"><span><b>Time</b> : </span>{{sched[4]}} ({{sched[5]}})</p>
+                                <p class="card-text"><span><b>Status</b> : </span><b class="text-primary">{{sched[1]}}</b>
+                                </p>
+                                <a class="btn btn-danger stretched-link"
+                                    href="{{url_for('deleting_new_schedule', schedule_id=sched[0])}}">
+                                    <b class="text-light">Delete</b> </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {%endfor%}
+                {%else%}
+                <div class="col-12 message">
+                    <h3 class="card-title text-primary text-center">No new slots</h3>
+                </div>
+                {%endif%}
             </div>
-            {%endfor%}
-            {%else%}
-            <div class="col-12 message">
-                <h3 class="card-title text-primary text-center">No new slots!</h3>
-            </div>
-            {%endif%}
+
         </div>
+      
     </div>
 </section>
 {% endblock %}
