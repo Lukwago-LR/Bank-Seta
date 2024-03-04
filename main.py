@@ -58,7 +58,7 @@ def register():
         if data['pass'] == data['password_confirm']:
             db = sqlite3.connect("bank_seta.db")
             register_user(db, data['name'], data['email'], data['usertype'], generate_password_hash(data['pass']))
-            return render_template("logout.html")
+            return render_template("login.html")
     return render_template("register.html")
 
 
